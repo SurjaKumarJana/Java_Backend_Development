@@ -29,7 +29,7 @@ Best for:
 -------------------------------------
 Focus: Objects that combine data and behavior
 
-OOP becomes particularly useful when building larger, more complex systems. If
+        OOP becomes particularly useful when building larger, more complex systems. If
 your program needs to model real-world entities with attributes and behaviors,
 and these entities interact with each other in a meaningful way, OOP is the
 preferred approach. For example, in a software system for managing students
