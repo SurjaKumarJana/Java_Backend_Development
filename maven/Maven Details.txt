@@ -1,0 +1,196 @@
+
+                            Apache Maven - Introduction
+
+   resources : https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Build_Lifecycle_Basics
+---------------------------------------------------------------------------------------------------
+Maven is a powerful project management tool based on the Project Object Model (POM).
+It is used for project building, managing dependencies, and documentation.
+It simplifies the build process, much like ANT, but it is much more advanced than ANT.
+Maven offers a more advanced, convention-based approach that reduces the need for manual configuration.
+
+It helps in:
+- Building the project
+- Managing dependencies
+- Running tests
+- Packaging the application
+- Deploying the final product
+
+Why Do We Need Maven?
+---------------------------------------------------------------------------------------------------
+1. Simplifies Build Process:
+   - Automates compilation, testing, packaging, and deployment.
+
+2. Dependency Management:
+   - Automatically downloads required libraries from central repositories.
+   - Handles versioning and transitive dependencies.
+
+3. Standardized Project Structure:
+   - Follows a consistent directory layout across projects.(convention-based approach )
+
+4. Easy Project Configuration:
+   - Uses a single pom.xml file to manage all project-related configurations.
+
+5. Build Lifecycle Management:
+   - Defines clear phases like compile, test, package, install, and deploy.
+
+6. Reusability and Extensibility:
+   - Supports plugins to add custom build tasks or integrate with other tools.
+
+7. Better Collaboration:
+   - Developers can easily understand and work on Maven-based projects without setup confusion.
+
+
+pom.xml (Project Object Model)
+---------------------------------------------------------------------------------------------------
+pom.xml is the core configuration file used by Maven to manage the build process, project
+information, dependencies, and plugins.
+
+Key Elements:
+
+1. project
+   - Root element of every pom.xml file
+
+2. modelVersion
+   - Maven POM model version (usually 4.0.0)
+
+3. groupId
+   - Unique ID for the organization or project group
+
+4. artifactId
+   - Unique name of the project
+
+5. version
+   - Current version of the project
+
+6. packaging
+   - Output type: jar, war, etc.
+
+7. dependencies
+   - List of external libraries required by the project
+
+8. build
+   - Contains plugin and build configurations
+
+
+
+Maven Build Lifecycle
+---------------------
+A lifecycle is a sequence of phases that define the order in which tasks are executed during the build process.
+
+There are 3 built-in lifecycles:
+1. default – Handles project deployment (most commonly used)
+2. clean – Cleans the project by deleting the target directory
+3. site – Generates project documentation
+
+Default Lifecycle Phases:
+1. validate    - Checks if the project is correct and all required information is available
+2. compile     - Compiles the source code
+3. test        - Runs unit tests using a suitable testing framework
+4. package     - Packages the compiled code into a JAR/WAR file
+5. verify      - Verifies the package meets quality standards
+6. install     - Installs the package into the local repository
+7. deploy      - Deploys the package to a remote repository for sharing
+
+Clean Lifecycle Phases:
+1. pre-clean   - Performs operations before cleaning
+2. clean       - Deletes target directory
+3. post-clean  - Performs operations after cleaning
+
+Site Lifecycle Phases:
+1. pre-site    - Performs operations before site generation
+2. site        - Generates project documentation
+3. post-site   - Performs operations after site generation
+4. site-deploy - Deploys the generated documentation to a web server
+
+Each phase can be associated with one or more plugin goals to perform specific tasks.
+
+
+Maven Build Phases
+-------------------
+A phase represents a step in the Maven build lifecycle. Each phase performs a specific task.
+
+Common Phases in the Default Lifecycle:
+
+1. validate
+   - Validates the project structure and configuration
+
+2. compile
+   - Compiles the source code located in src/main/java
+
+3. test
+   - Runs unit tests using test source code in src/test/java
+
+4. package
+   - Packages the compiled code into a distributable format (e.g., JAR, WAR)
+
+5. verify
+   - Performs checks to ensure the package is valid and meets quality standards
+
+6. install
+   - Installs the package into the local repository (~/.m2/repository)
+
+7. deploy
+   - Deploys the final package to a remote repository for sharing with others
+
+Note:
+- Each phase depends on the previous one.
+- Running a phase executes all previous phases in order.
+  (e.g., `mvn package` will run validate → compile → test → package)
+
+
+
+Maven Goals
+------------
+A goal is a specific task that is executed by a plugin in Maven.
+
+Key Points:
+- A phase consists of one or more goals.
+- A goal can be bound to zero or more phases.
+- Goals can also be executed directly using the command line.
+
+
+
+
+Maven Plugins
+
+Definition:
+Plugins in Maven are tools that perform specific tasks during the build process.
+Maven uses plugins to compile code, run tests, create JAR/WAR files, clean build folders, and more.
+
+Maven itself doesn’t perform tasks like compilation or testing.
+It delegates those tasks to plugins, which provide actual functionality through goals.
+
+Structure to Add a Plugin in pom.xml
+
+<project>
+  ...
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>PLUGIN-NAME</artifactId>
+        <version>PLUGIN-VERSION</version>
+        <configuration>
+          <!-- plugin-specific configuration -->
+        </configuration>
+        <executions>
+          <execution>
+            <phase>PHASE-NAME</phase>
+            <goals>
+              <goal>GOAL-NAME</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+  ...
+</project>
+
+In short:
+Lifecycle defines the overall build process
+Phases are the steps in that process
+Goals are the tasks done in each step
+Plugins contain the logic to perform those tasks
