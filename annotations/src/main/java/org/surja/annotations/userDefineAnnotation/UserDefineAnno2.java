@@ -23,7 +23,7 @@ import java.lang.annotation.Documented;
  * @author Surja Kumar Jana
  * 
  */
- @interface MyAnno{
+@interface MyAnno2{
     String developerName();
     String developerEmpID();
     String date();
