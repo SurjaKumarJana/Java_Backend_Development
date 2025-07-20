@@ -34,6 +34,12 @@ public class AppController {
     public String getSesssionDetails(){
         return loginSessions.getSessionDetails();
     }
+    //path param
+    @GetMapping("/product/{id}")
+    public Product get(@PathVariable int id){
+//        @PathVariable in Spring Boot is used to extract values from the URL path
+        return productService.getById(id);
+    }
 
     //post method
     @PostMapping("/addProduct")
