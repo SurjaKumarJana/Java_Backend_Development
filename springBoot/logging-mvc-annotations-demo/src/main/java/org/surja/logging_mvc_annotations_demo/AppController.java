@@ -1,8 +1,8 @@
 package org.surja.logging_mvc_annotations_demo;
 
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.surja.loginService.LoginSessions;
 
 import java.util.List;
 
@@ -11,18 +11,28 @@ import java.util.List;
 public class AppController {
     @Autowired
     private ProductService productService;
+    @Autowired(required = false)
+    private LoginSessions loginSessions;
+
 
     @GetMapping("/hello")
     public String sayHello(){
         return "Hello from : "+Thread.currentThread().getName();
     }
+
     @GetMapping("/getAll")
     public List<Product> getAll(){
         return productService.getAll();
     }
+
     @GetMapping("/getById")
     public Product getById(@RequestParam int id){
         return productService.getById(id);
+    }
+
+    @GetMapping("/sessions")
+    public String getSesssionDetails(){
+        return loginSessions.getSessionDetails();
     }
 
     //post method
@@ -30,6 +40,7 @@ public class AppController {
     public String addProduct(@RequestBody Product product){
         return productService.createProduct(product);
     }
+
 
 
 }
