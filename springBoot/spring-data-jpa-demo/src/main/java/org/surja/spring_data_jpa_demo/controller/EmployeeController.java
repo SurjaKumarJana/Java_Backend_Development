@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.surja.spring_data_jpa_demo.dto.EmployeeDetailReqDto;
 import org.surja.spring_data_jpa_demo.entity.Employee;
+import org.surja.spring_data_jpa_demo.exception.AdhaarValidationFailedException;
+import org.surja.spring_data_jpa_demo.exception.LaptopAllocationFailedException;
 import org.surja.spring_data_jpa_demo.service.EmployeeService;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createEmp(@RequestBody EmployeeDetailReqDto employeeDetailReq){
+    public ResponseEntity<Long> createEmp(@RequestBody EmployeeDetailReqDto employeeDetailReq) throws AdhaarValidationFailedException, LaptopAllocationFailedException {
         Long id = employeeService.create(employeeDetailReq);
         return ResponseEntity.ok(id);
     }
