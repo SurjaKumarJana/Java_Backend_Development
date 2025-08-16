@@ -1,4 +1,4 @@
-package org.surja.spring_security_demo;
+package org.surja.spring_security_demo.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package org.surja.spring_security_demo;
+package org.surja.spring_security_demo.service;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +17,7 @@ public class AppUserService implements UserDetailsService {
 
     @PostConstruct
     public  void init(){
-        userStore.put("Surja", User.builder().username("Surja").password("Surja121").roles("ADMIN").build());
+        userStore.put("Surja", User.builder().username("Surja").password("Surja121").roles("USER").build());
         userStore.put("Rahul", User.builder().username("Rahul").password("Rahul121").roles("USER").build());
 
     }
