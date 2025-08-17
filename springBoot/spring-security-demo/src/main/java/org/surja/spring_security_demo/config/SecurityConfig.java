@@ -38,4 +38,14 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+    // mock function to generate encoded password
+    // used to manually store the password in db
+    public static void main(String[] args) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = "vijoy123";
+        System.out.println(passwordEncoder.encode(password));
+        System.out.println(passwordEncoder.encode(password));
+    }
 }
+
+
