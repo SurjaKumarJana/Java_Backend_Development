@@ -25,7 +25,8 @@ public class SecurityConfig {
                 // 1. Define authorization rules for HTTP requests
                 .authorizeHttpRequests((auth) -> {
                     // Allow anyone (no authentication required) to access any endpoint under /public/**
-                    auth.requestMatchers("/public/**").permitAll()
+                    auth.requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                            .requestMatchers("/public/**").permitAll()
                             // All other endpoints must be authenticated (user must log in)
                             .anyRequest().authenticated();
                 })
