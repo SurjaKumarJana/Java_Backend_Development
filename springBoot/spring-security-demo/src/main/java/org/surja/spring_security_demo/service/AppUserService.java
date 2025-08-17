@@ -1,11 +1,15 @@
 package org.surja.spring_security_demo.service;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.surja.spring_security_demo.entity.AppUser;
+import org.surja.spring_security_demo.repo.AppUserRepo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,25 +17,30 @@ import java.util.Map;
 @Service
 public class AppUserService implements UserDetailsService {
 
-    Map<String,UserDetails> userStore  = new HashMap<>();
 
-    @PostConstruct
-    public  void init(){
-        userStore.put("Surja", User.builder().username("Surja").password("Surja121").roles("USER").build());
-        userStore.put("Rahul", User.builder().username("Rahul").password("Rahul121").roles("USER").build());
+    //now we are storing the user info in db
+    @Autowired
+    private AppUserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
+
+
+    public String createUser(AppUser appuser){
+        appuser.setPassword(encoder.encode(appuser.getPassword()));
+        userRepo.save(appuser);
+
+        return "user created";
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        UserDetails user = userStore.get(username);
-        if(user == null){
-            throw new UsernameNotFoundException("No user found with this name ");
+        AppUser appUser = userRepo.findByEmail(username);
+        if(appUser == null){
+            throw new UsernameNotFoundException("User Does not exist");
         }
-
-
-        return user;
+        return appUser;
     }
 }

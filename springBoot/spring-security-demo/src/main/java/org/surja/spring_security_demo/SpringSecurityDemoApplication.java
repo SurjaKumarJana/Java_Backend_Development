@@ -9,10 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class SpringSecurityDemoApplication {
 
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		return NoOpPasswordEncoder.getInstance() ;
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder(){
+//		return NoOpPasswordEncoder.getInstance() ;
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringSecurityDemoApplication.class, args);

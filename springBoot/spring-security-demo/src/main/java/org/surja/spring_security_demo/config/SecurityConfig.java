@@ -22,6 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
                 // 1. Define authorization rules for HTTP requests
                 .authorizeHttpRequests((auth) -> {
                     // Allow anyone (no authentication required) to access any endpoint under /public/**
