@@ -11,7 +11,8 @@ import org.surja.restTemplate_feignClient_demo.dto.ProductDto;
 
 import java.util.List;
 
-@FeignClient(name = "products", url = "http://localhost:8080")
+//if we have registered our eureka server PRODUCT-SERVICE then we can simple pass the name no url required
+@FeignClient(name = "PRODUCT-SERVICE")
 public interface ProductClient {
 
 
