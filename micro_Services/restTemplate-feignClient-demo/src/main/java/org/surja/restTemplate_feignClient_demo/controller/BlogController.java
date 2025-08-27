@@ -2,6 +2,8 @@ package org.surja.restTemplate_feignClient_demo.controller;
 
 
 import org.apache.coyote.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.Date;
 @RequestMapping("/blog")
 public class BlogController {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(BlogController.class);
     @Autowired
     private RestTemplate restTemplate;
 
@@ -23,6 +26,7 @@ public class BlogController {
 
 //    @GetMapping("/{id}")
 //    public ResponseEntity<BlogDto> getBlogById(@PathVariable Long id, @RequestHeader (required = false) String requestId){
+//        LOGGER.info("processing request for blog by requestId : {}",requestId);
 //        String url = "https://jsonplaceholder.typicode.com/posts/"+id;
 //        BlogDto blogDto = restTemplate.getForObject(url,BlogDto.class);
 //        blogDto.setServerDateTime(new Date());
@@ -31,6 +35,7 @@ public class BlogController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BlogDto> getBlogById(@PathVariable Long id, @RequestHeader(required = false) String requestId){
+        LOGGER.info("processing request for blog by requestId : {}",requestId);
         BlogDto blogDto = blogClient.getBlogById(id);
         blogDto.setServerDateTime(new Date());
         return ResponseEntity.ok(blogDto);
