@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -22,6 +21,8 @@ public class KafkaController {
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
 
 
     @GetMapping("/push")
@@ -31,6 +32,18 @@ public class KafkaController {
         return ResponseEntity.ok("Data pushed");
     }
 
+    @PostMapping("")
+    ResponseEntity<String> sendEmail(@RequestBody EmailDTO emailDTO){
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("emailservice.surja@gmail.com");
+        simpleMailMessage.setSubject(emailDTO.getSubject());
+        simpleMailMessage.setTo(emailDTO.getToEmail());
+        simpleMailMessage.setText(emailDTO.getBody());
+        simpleMailMessage.setCc(emailDTO.getCc());
+        javaMailSender.send(simpleMailMessage);
+        return ResponseEntity.ok("Email Sent");
+
+    }
 
 
 
