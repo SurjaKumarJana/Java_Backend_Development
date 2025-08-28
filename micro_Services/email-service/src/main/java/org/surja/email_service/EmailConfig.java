@@ -1,4 +1,4 @@
-package org.surja.kafka_demo;
+package org.surja.email_service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

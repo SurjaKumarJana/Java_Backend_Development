@@ -32,16 +32,24 @@ public class KafkaController {
         return ResponseEntity.ok("Data pushed");
     }
 
-    @PostMapping("")
+    @PostMapping("/email")
     ResponseEntity<String> sendEmail(@RequestBody EmailDTO emailDTO){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom("emailservice.surja@gmail.com");
+        simpleMailMessage.setFrom("email@gmail.com");
         simpleMailMessage.setSubject(emailDTO.getSubject());
         simpleMailMessage.setTo(emailDTO.getToEmail());
         simpleMailMessage.setText(emailDTO.getBody());
         simpleMailMessage.setCc(emailDTO.getCc());
         javaMailSender.send(simpleMailMessage);
         return ResponseEntity.ok("Email Sent");
+
+    }
+
+    @PostMapping("/fast-email")
+    ResponseEntity<String> fastEmail(@RequestBody EmailDTO emailRequest) throws ExecutionException, InterruptedException {
+        Future future = kafkaTemplate.send("EmailToSend",emailRequest.getToEmail(),emailRequest);
+        LOGGER.info("Payload pushed to kafka : {}",future.get());
+        return ResponseEntity.ok("Pushed to kafka");
 
     }
 
